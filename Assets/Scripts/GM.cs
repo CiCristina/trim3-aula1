@@ -2,21 +2,25 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class GM : MonoBehaviour {
 
 	public static GM instance = null;
 
-	public float yMinLive = -10f;
+	public float yLive = -10;
 
-	public Transform spawnPoint;
+    PlayerCtrl player;
+
+    public float timeToRespawn = 2f;
+
+    public Transform spawnPoint;
 
 	public GameObject playerPrefab; 
 
+    public UI ui;
 
-	PlayerCtrl player;
 
-	public float timeToRespawn = 2f;
-
+    GameData data = new GameData();
    
     void Awake(){
 		if (instance == null) {
@@ -37,8 +41,18 @@ public class GM : MonoBehaviour {
 				player = obj.GetComponent<PlayerCtrl>();
 			}
 		}
-		
+        DisplayHudData();
 	}
+
+    void DisplayHudData()
+    {
+        ui.hud.txtCoinCount.text = "x" + data.coinCount;
+    }
+
+    public void IncrementCoinCount()
+    {
+        data.coinCount++;
+    }
 
 	public void RespawnPlayer(){
 		Instantiate(playerPrefab, spawnPoint.position, spawnPoint.rotation);

@@ -58,7 +58,7 @@ void OnDrawGizmos (){
 // Update is called once per frame
 void Update () {
 
-    if (transform.position.y < GM.instance.yMinLive){
+    if (transform.position.y < GM.instance.yLive){
         GM.instance.KillPlayer();
     }
 
@@ -140,6 +140,7 @@ void StopMovingHorizontal() {
 		if (other.gameObject.CompareTag("Coin")) {
             AudioManager.instance.PlayCoinPickupSound(other.gameObject);
             SFXManager.instance.ShowCoinParticles(other.gameObject);
+            GM.instance.IncrementCoinCount();
 			Destroy(other.gameObject);
 		}
 	}
